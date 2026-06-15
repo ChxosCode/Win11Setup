@@ -28,8 +28,9 @@
 [CmdletBinding()]
 param(
     # Selects config/Profile.<Name>.psd1
+    [Alias("Profile")]
     [ValidateSet("Minimal", "Dev", "Full")]
-    [string]$Profile = "Dev",
+    [string]$ProfileName = "Dev",
 
     # Preview actions without intentionally changing the machine.
     [switch]$DryRun,
@@ -57,16 +58,16 @@ param(
 # script's global default behavior.
 
 $ScriptDefaults = @{
-    DefaultProfileName = "Dev"
+    DefaultProfileName                     = "Dev"
 
     # Keep destructive operations locked unless the command line explicitly opts in.
-    RequireAllowDestructiveSwitch = $true
+    RequireAllowDestructiveSwitch          = $true
 
     # Require a prompt for destructive operations unless -NoConfirm is supplied.
     RequireConfirmationForDestructiveTasks = $true
 
     # Stop immediately on most errors. This is safer than continuing after partial failure.
-    StopOnFirstError = $true
+    StopOnFirstError                       = $true
 }
 
 # =============================================================================
@@ -80,7 +81,7 @@ if ($ScriptDefaults.StopOnFirstError) {
 }
 
 $ScriptRoot = $PSScriptRoot
-$ConfigPath = Join-Path $ScriptRoot "config\Profile.$Profile.psd1"
+$ConfigPath = Join-Path $ScriptRoot "config\Profile.$ProfileName.psd1"
 
 if (-not (Test-Path $ConfigPath)) {
     throw "Profile config not found: $ConfigPath"
@@ -109,62 +110,48 @@ foreach ($modulePath in $ModulePaths) {
 $LogDir = Join-Path $ScriptRoot "logs"
 New-Item -ItemType Directory -Path $LogDir -Force | Out-Null
 
-$LogPath = Join-Path $LogDir ("bootstrap-{0}-{1}.log" -f $Profile, (Get-Date -Format "yyyyMMdd-HHmmss"))
+$LogPath = Join-Path $LogDir ("bootstrap-{0}-{1}.log" -f $ProfileName, (Get-Date -Format "yyyyMMdd-HHmmss"))
 
 Start-Transcript -Path $LogPath | Out-Null
 
 try {
-    Write-SetupBanner -Title "Win11Setup" -Subtitle "Profile: $Profile"
+    Write-SetupBanner -Title "Win11Setup" -Subtitle "Profile: $ProfileName"
 
     Assert-Admin
-
-    $RunContext = @{
-        ScriptRoot          = $ScriptRoot
-        Profile             = $Profile
-        Config              = $Config
-        DryRun              = [bool]$DryRun
-        AllowDestructive    = [bool]$AllowDestructive
-        NoConfirm           = [bool]$NoConfirm
-        SkipWinget          = [bool]$SkipWinget
-        SkipDebloat         = [bool]$SkipDebloat
-        SkipTweaks          = [bool]$SkipTweaks
-        NoRestorePoint      = [bool]$NoRestorePoint
-        LogPath             = $LogPath
-    }
 
     Invoke-SetupTask `
         -Name "Create system restore point" `
         -Enabled:($Config.Safety.CreateRestorePoint -and -not $NoRestorePoint) `
         -DryRun:$DryRun `
         -Action {
-            New-SystemRestorePointSafe `
-                -Description "Before Win11Setup bootstrap ($Profile)" `
-                -DryRun:$DryRun
-        }
+        New-SystemRestorePointSafe `
+            -Description "Before Win11Setup bootstrap ($ProfileName)" `
+            -DryRun:$DryRun
+    }
 
     Invoke-SetupTask `
         -Name "Check winget availability" `
         -Enabled:(-not $SkipWinget) `
         -DryRun:$DryRun `
         -Action {
-            Assert-WingetAvailable
-        }
+        Assert-WingetAvailable
+    }
 
     Invoke-SetupTask `
         -Name "Update winget sources" `
         -Enabled:($Config.Features.UpdateWingetSources -and -not $SkipWinget) `
         -DryRun:$DryRun `
         -Action {
-            Update-WingetSources -DryRun:$DryRun
-        }
+        Update-WingetSources -DryRun:$DryRun
+    }
 
     Invoke-SetupTask `
         -Name "Upgrade existing winget apps" `
         -Enabled:($Config.Features.UpgradeExistingWingetApps -and -not $SkipWinget) `
         -DryRun:$DryRun `
         -Action {
-            Upgrade-WingetApps -DryRun:$DryRun
-        }
+        Upgrade-WingetApps -DryRun:$DryRun
+    }
 
     Invoke-SetupTask `
         -Name "Remove conservative Appx junk" `
@@ -174,13 +161,13 @@ try {
         -NoConfirm:$NoConfirm `
         -DryRun:$DryRun `
         -Action {
-            $listPath = Resolve-SetupPath -ScriptRoot $ScriptRoot -RelativePath $Config.Lists.ConservativeAppx
+        $listPath = Resolve-SetupPath -ScriptRoot $ScriptRoot -RelativePath $Config.Lists.ConservativeAppx
 
-            Remove-AppxPackagesFromList `
-                -Path $listPath `
-                -RemoveProvisioned:$Config.Features.RemoveProvisionedAppxPackages `
-                -DryRun:$DryRun
-        }
+        Remove-AppxPackagesFromList `
+            -Path $listPath `
+            -RemoveProvisioned:$Config.Features.RemoveProvisionedAppxPackages `
+            -DryRun:$DryRun
+    }
 
     Invoke-SetupTask `
         -Name "Remove aggressive Appx junk" `
@@ -190,75 +177,75 @@ try {
         -NoConfirm:$NoConfirm `
         -DryRun:$DryRun `
         -Action {
-            $listPath = Resolve-SetupPath -ScriptRoot $ScriptRoot -RelativePath $Config.Lists.AggressiveAppx
+        $listPath = Resolve-SetupPath -ScriptRoot $ScriptRoot -RelativePath $Config.Lists.AggressiveAppx
 
-            Remove-AppxPackagesFromList `
-                -Path $listPath `
-                -RemoveProvisioned:$Config.Features.RemoveProvisionedAppxPackages `
-                -DryRun:$DryRun
-        }
+        Remove-AppxPackagesFromList `
+            -Path $listPath `
+            -RemoveProvisioned:$Config.Features.RemoveProvisionedAppxPackages `
+            -DryRun:$DryRun
+    }
 
     Invoke-SetupTask `
         -Name "Install winget apps" `
         -Enabled:($Config.Features.InstallWingetApps -and -not $SkipWinget) `
         -DryRun:$DryRun `
         -Action {
-            $appsPath = Resolve-SetupPath -ScriptRoot $ScriptRoot -RelativePath $Config.Lists.WingetApps
+        $appsPath = Resolve-SetupPath -ScriptRoot $ScriptRoot -RelativePath $Config.Lists.WingetApps
 
-            Install-WingetAppsFromJson `
-                -Path $appsPath `
-                -DryRun:$DryRun
-        }
+        Install-WingetAppsFromJson `
+            -Path $appsPath `
+            -DryRun:$DryRun
+    }
 
     Invoke-SetupTask `
         -Name "Apply Explorer tweaks" `
         -Enabled:($Config.Features.ApplyExplorerTweaks -and -not $SkipTweaks) `
         -DryRun:$DryRun `
         -Action {
-            Set-ExplorerTweaks `
-                -RestartExplorer:$Config.Settings.RestartExplorerAfterTweaks `
-                -DryRun:$DryRun
-        }
+        Set-ExplorerTweaks `
+            -RestartExplorer:$Config.Settings.RestartExplorerAfterTweaks `
+            -DryRun:$DryRun
+    }
 
     Invoke-SetupTask `
         -Name "Apply taskbar tweaks" `
         -Enabled:($Config.Features.ApplyTaskbarTweaks -and -not $SkipTweaks) `
         -DryRun:$DryRun `
         -Action {
-            Set-TaskbarTweaks -DryRun:$DryRun
-        }
+        Set-TaskbarTweaks -DryRun:$DryRun
+    }
 
     Invoke-SetupTask `
         -Name "Apply developer tweaks" `
         -Enabled:($Config.Features.ApplyDeveloperTweaks -and -not $SkipTweaks) `
         -DryRun:$DryRun `
         -Action {
-            Set-DeveloperTweaks -DryRun:$DryRun
-        }
+        Set-DeveloperTweaks -DryRun:$DryRun
+    }
 
     Invoke-SetupTask `
         -Name "Enable WSL optional features" `
         -Enabled:($Config.Features.EnableWSL -and -not $SkipTweaks) `
         -DryRun:$DryRun `
         -Action {
-            Enable-WslFeature -DryRun:$DryRun
-        }
+        Enable-WslFeature -DryRun:$DryRun
+    }
 
     Invoke-SetupTask `
         -Name "Enable Hyper-V optional feature" `
         -Enabled:($Config.Features.EnableHyperV -and -not $SkipTweaks) `
         -DryRun:$DryRun `
         -Action {
-            Enable-HyperVFeature -DryRun:$DryRun
-        }
+        Enable-HyperVFeature -DryRun:$DryRun
+    }
 
     Invoke-SetupTask `
         -Name "Enable Windows Sandbox optional feature" `
         -Enabled:($Config.Features.EnableWindowsSandbox -and -not $SkipTweaks) `
         -DryRun:$DryRun `
         -Action {
-            Enable-WindowsSandboxFeature -DryRun:$DryRun
-        }
+        Enable-WindowsSandboxFeature -DryRun:$DryRun
+    }
 
     Write-SetupSuccess -Message "Bootstrap complete. Log saved to: $LogPath"
 }
