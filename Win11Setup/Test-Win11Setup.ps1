@@ -78,16 +78,16 @@ Invoke-ValidationStep -Name "Module imports" -Action {
 Invoke-ValidationStep -Name "Profile configs" -Action {
     $profiles = Get-ChildItem -Path (Join-Path $ScriptRoot "config") -Filter *.psd1 -File
 
-    foreach ($profile in $profiles) {
-        $config = Import-PowerShellDataFile -Path $profile.FullName
+    foreach ($profileFile in $profiles) {
+        $config = Import-PowerShellDataFile -Path $profileFile.FullName
 
         foreach ($section in @("Settings", "Safety", "Features", "Lists")) {
             if (-not $config.ContainsKey($section)) {
-                throw "$($profile.Name) is missing required section: $section"
+                throw "$($profileFile.Name) is missing required section: $section"
             }
         }
 
-        Write-Host "Loaded $($profile.Name)"
+        Write-Host "Loaded $($profileFile.Name)"
     }
 }
 

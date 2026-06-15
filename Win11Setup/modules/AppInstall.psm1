@@ -36,7 +36,7 @@ function Install-WingetApp {
         }
     }
 
-    $args = @(
+    $wingetArguments = @(
         "install",
         "--id", $Id,
         "-e",
@@ -46,15 +46,15 @@ function Install-WingetApp {
     )
 
     if ($Source) {
-        $args += @("--source", $Source)
+        $wingetArguments += @("--source", $Source)
     }
 
     if ($DryRun) {
-        Write-Host "[DRY RUN] winget $($args -join ' ')" -ForegroundColor Yellow
+        Write-Host "[DRY RUN] winget $($wingetArguments -join ' ')" -ForegroundColor Yellow
         return
     }
 
-    & winget @args
+    & winget @wingetArguments
 
     if ($LASTEXITCODE -ne 0) {
         throw "Failed installing $Id"

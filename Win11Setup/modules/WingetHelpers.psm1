@@ -39,7 +39,7 @@ function Update-WingetSources {
     Invoke-Winget -Arguments @("source", "update") -DryRun:$DryRun
 }
 
-function Upgrade-WingetApps {
+function Update-WingetApps {
     param([switch]$DryRun)
 
     Invoke-Winget `

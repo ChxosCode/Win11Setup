@@ -130,7 +130,7 @@ try {
         -Enabled:($Config.Features.UpgradeExistingWingetApps -and -not $SkipWinget) `
         -DryRun:$DryRun `
         -Action {
-            Upgrade-WingetApps -DryRun:$DryRun
+            Update-WingetApps -DryRun:$DryRun
         }
 
     Invoke-SetupTask `
