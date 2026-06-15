@@ -64,6 +64,10 @@ To validate the toolkit files without running setup tasks:
 .\Test-Win11Setup.ps1
 ```
 
+This validation script does not require Administrator. It checks PowerShell parsing,
+module imports, profile loading, winget JSON shape, manifest hashes, and enabled
+winget package IDs when `winget` is available.
+
 To allow app removals and other destructive operations:
 
 ```powershell
@@ -173,6 +177,26 @@ Skips restore point creation even if enabled in the profile.
 
 ---
 
+## Validation and maintenance
+
+Run validation after editing scripts, profiles, package lists, or the manifest:
+
+```powershell
+.\Test-Win11Setup.ps1
+```
+
+If you are offline or do not want to query winget package IDs:
+
+```powershell
+.\Test-Win11Setup.ps1 -SkipWingetIdCheck
+```
+
+The manifest in `MANIFEST.md` stores SHA256 hashes for toolkit files. If you
+intentionally edit tracked files, update the matching manifest hashes before
+committing.
+
+---
+
 ## Editing installed apps
 
 App lists are JSON files in `lists/`.
@@ -257,6 +281,9 @@ bootstrap-Dev-20260615-143000.log
 ```
 
 Use this when something fails or when you want to see exactly what happened.
+Appx removal failures are written as warnings instead of being hidden, and
+optional Windows feature commands fail the task if the underlying Windows command
+returns an error.
 
 ---
 

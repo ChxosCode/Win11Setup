@@ -3,7 +3,7 @@
 SHA256 hashes for package contents.
 
 - `Bootstrap-Win11.ps1` — `5ccce8797bded2d362050a234f629521a1ed51fcab2582cd7900558f756ff713`
-- `README.md` — `a72ed926e5a2e49f6c8a6ddada1cc582b20f7f642534df00df23a4aa10678a4d`
+- `README.md` — `75269c2c3676a0ebec32ac3ea25fec24f787f338ff71ba225b2496b65df3f333`
 - `Test-Win11Setup.ps1` — `569bedf7bd2c36de4dc32f608249ed86a302e768fe49e73a1cb546f01e2c7784`
 - `config/Profile.Dev.psd1` — `a1eb6a61cc87b83cfe632835acaf696c74ff2c9fdb2f4026d6f3638b47ec92d6`
 - `config/Profile.Full.psd1` — `e7d323aa94c30c5298b5d606fcdb8a5df7186fa5eda90ddf79a7802f1389254a`
