@@ -1,0 +1,140 @@
+{
+  "apps": [
+    {
+      "id": "Microsoft.PowerShell",
+      "name": "PowerShell 7",
+      "enabled": true,
+      "category": "shell",
+      "source": "winget",
+      "notes": "Modern PowerShell."
+    },
+    {
+      "id": "Microsoft.WindowsTerminal",
+      "name": "Windows Terminal",
+      "enabled": true,
+      "category": "shell",
+      "source": "winget",
+      "notes": "Terminal app."
+    },
+    {
+      "id": "Microsoft.PowerToys",
+      "name": "PowerToys",
+      "enabled": true,
+      "category": "utility",
+      "source": "winget",
+      "notes": "Windows power-user utilities."
+    },
+    {
+      "id": "7zip.7zip",
+      "name": "7-Zip",
+      "enabled": true,
+      "category": "utility",
+      "source": "winget",
+      "notes": "Archive utility."
+    },
+    {
+      "id": "voidtools.Everything",
+      "name": "Everything",
+      "enabled": true,
+      "category": "utility",
+      "source": "winget",
+      "notes": "Fast file search."
+    },
+    {
+      "id": "Google.Chrome",
+      "name": "Google Chrome",
+      "enabled": true,
+      "category": "browser",
+      "source": "winget",
+      "notes": "Browser."
+    },
+    {
+      "id": "Mozilla.Firefox",
+      "name": "Mozilla Firefox",
+      "enabled": false,
+      "category": "browser",
+      "source": "winget",
+      "notes": "Optional second browser."
+    },
+    {
+      "id": "Git.Git",
+      "name": "Git",
+      "enabled": true,
+      "category": "dev",
+      "source": "winget",
+      "notes": "Version control."
+    },
+    {
+      "id": "Microsoft.VisualStudioCode",
+      "name": "Visual Studio Code",
+      "enabled": true,
+      "category": "dev",
+      "source": "winget",
+      "notes": "Editor."
+    },
+    {
+      "id": "Microsoft.VisualStudio.2022.Community",
+      "name": "Visual Studio 2022 Community",
+      "enabled": true,
+      "category": "dev",
+      "source": "winget",
+      "notes": "Full Visual Studio IDE."
+    },
+    {
+      "id": "Microsoft.DotNet.SDK.10",
+      "name": ".NET SDK 10",
+      "enabled": true,
+      "category": "dev",
+      "source": "winget",
+      "notes": "Current .NET SDK line. Change to Microsoft.DotNet.SDK.9 if needed."
+    },
+    {
+      "id": "OpenJS.NodeJS.LTS",
+      "name": "Node.js LTS",
+      "enabled": true,
+      "category": "dev",
+      "source": "winget",
+      "notes": "Node.js LTS runtime."
+    },
+    {
+      "id": "Docker.DockerDesktop",
+      "name": "Docker Desktop",
+      "enabled": false,
+      "category": "dev",
+      "source": "winget",
+      "notes": "Disabled by default because it may require WSL/Hyper-V decisions."
+    },
+    {
+      "id": "PostgreSQL.PostgreSQL.18",
+      "name": "PostgreSQL 18",
+      "enabled": true,
+      "category": "database",
+      "source": "winget",
+      "notes": "PostgreSQL server. Winget publishes this package as a versioned major line."
+    },
+    {
+      "id": "PostgreSQL.pgAdmin",
+      "name": "pgAdmin 4",
+      "enabled": true,
+      "category": "database",
+      "source": "winget",
+      "notes": "PostgreSQL administration UI."
+    },
+    {
+      "id": "DBeaverCorp.DBeaver.Community",
+      "name": "DBeaver Community",
+      "enabled": false,
+      "category": "database",
+      "source": "winget",
+      "notes": "Optional database client."
+    },
+    {
+      "id": "Warp.Warp",
+      "name": "Warp",
+      "enabled": false,
+      "category": "terminal",
+      "source": "winget",
+      "notes": "Optional terminal. Enable if wanted."
+    }
+  ]
+}

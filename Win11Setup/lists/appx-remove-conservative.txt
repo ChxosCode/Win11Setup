@@ -1,0 +1,18 @@
+# Conservative Windows 11 Appx removal list.
+# Blank lines and comments are ignored.
+# These are intentionally boring. Add/remove entries as needed.
+
+Clipchamp.Clipchamp
+Microsoft.BingNews
+Microsoft.BingWeather
+Microsoft.GetHelp
+Microsoft.Getstarted
+Microsoft.MicrosoftOfficeHub
+Microsoft.MicrosoftSolitaireCollection
+Microsoft.People
+Microsoft.Todos
+Microsoft.WindowsFeedbackHub
+Microsoft.ZuneMusic
+Microsoft.ZuneVideo
+MSTeams
+MicrosoftTeams

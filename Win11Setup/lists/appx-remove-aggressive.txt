@@ -1,0 +1,12 @@
+# Aggressive/questionable Appx removals.
+# Review before enabling RemoveAggressiveAppxJunk in a profile.
+# These may affect gaming, phone integration, or Microsoft account experiences.
+
+Microsoft.XboxApp
+Microsoft.XboxGameOverlay
+Microsoft.XboxGamingOverlay
+Microsoft.XboxIdentityProvider
+Microsoft.XboxSpeechToTextOverlay
+Microsoft.YourPhone
+Microsoft.MixedReality.Portal
+Microsoft.SkypeApp

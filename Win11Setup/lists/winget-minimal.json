@@ -1,0 +1,60 @@
+{
+  "apps": [
+    {
+      "id": "Microsoft.PowerShell",
+      "name": "PowerShell 7",
+      "enabled": true,
+      "category": "shell",
+      "source": "winget",
+      "notes": "Modern PowerShell."
+    },
+    {
+      "id": "Microsoft.WindowsTerminal",
+      "name": "Windows Terminal",
+      "enabled": true,
+      "category": "shell",
+      "source": "winget",
+      "notes": "Terminal app."
+    },
+    {
+      "id": "Microsoft.PowerToys",
+      "name": "PowerToys",
+      "enabled": true,
+      "category": "utility",
+      "source": "winget",
+      "notes": "Windows power-user utilities."
+    },
+    {
+      "id": "7zip.7zip",
+      "name": "7-Zip",
+      "enabled": true,
+      "category": "utility",
+      "source": "winget",
+      "notes": "Archive utility."
+    },
+    {
+      "id": "voidtools.Everything",
+      "name": "Everything",
+      "enabled": true,
+      "category": "utility",
+      "source": "winget",
+      "notes": "Fast file search."
+    },
+    {
+      "id": "Google.Chrome",
+      "name": "Google Chrome",
+      "enabled": true,
+      "category": "browser",
+      "source": "winget",
+      "notes": "Browser."
+    },
+    {
+      "id": "Mozilla.Firefox",
+      "name": "Mozilla Firefox",
+      "enabled": false,
+      "category": "browser",
+      "source": "winget",
+      "notes": "Optional second browser."
+    }
+  ]
+}
