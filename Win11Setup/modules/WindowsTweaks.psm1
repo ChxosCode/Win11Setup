@@ -97,16 +97,56 @@ function Set-DeveloperTweaks {
         -DryRun:$DryRun
 }
 
-function Enable-WslFeature {
-    param([switch]$DryRun)
+function Invoke-NativeCommandChecked {
+    param(
+        [Parameter(Mandatory)]
+        [string]$FilePath,
+
+        [Parameter(Mandatory)]
+        [string[]]$Arguments,
+
+        [switch]$DryRun
+    )
+
+    $command = "$FilePath $($Arguments -join ' ')"
 
     if ($DryRun) {
-        Write-Host "[DRY RUN] Enable WSL and Virtual Machine Platform optional features" -ForegroundColor Yellow
+        Write-Host "[DRY RUN] $command" -ForegroundColor Yellow
         return
     }
 
-    dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
-    dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
+    Write-Host $command -ForegroundColor DarkGray
+    & $FilePath @Arguments
+
+    if ($LASTEXITCODE -ne 0) {
+        throw "Native command failed with exit code $($LASTEXITCODE): $command"
+    }
+}
+
+function Enable-WslFeature {
+    param([switch]$DryRun)
+
+    Invoke-NativeCommandChecked `
+        -FilePath "dism.exe" `
+        -Arguments @(
+            "/online",
+            "/enable-feature",
+            "/featurename:Microsoft-Windows-Subsystem-Linux",
+            "/all",
+            "/norestart"
+        ) `
+        -DryRun:$DryRun
+
+    Invoke-NativeCommandChecked `
+        -FilePath "dism.exe" `
+        -Arguments @(
+            "/online",
+            "/enable-feature",
+            "/featurename:VirtualMachinePlatform",
+            "/all",
+            "/norestart"
+        ) `
+        -DryRun:$DryRun
 }
 
 function Enable-HyperVFeature {
@@ -117,7 +157,9 @@ function Enable-HyperVFeature {
         return
     }
 
-    Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V -All -NoRestart
+    Write-Host "Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V -All -NoRestart" -ForegroundColor DarkGray
+    Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V -All -NoRestart -ErrorAction Stop | Out-Null
+    Write-Host "Enabled Hyper-V optional feature" -ForegroundColor Green
 }
 
 function Enable-WindowsSandboxFeature {
@@ -128,7 +170,9 @@ function Enable-WindowsSandboxFeature {
         return
     }
 
-    Enable-WindowsOptionalFeature -Online -FeatureName Containers-DisposableClientVM -All -NoRestart
+    Write-Host "Enable-WindowsOptionalFeature -Online -FeatureName Containers-DisposableClientVM -All -NoRestart" -ForegroundColor DarkGray
+    Enable-WindowsOptionalFeature -Online -FeatureName Containers-DisposableClientVM -All -NoRestart -ErrorAction Stop | Out-Null
+    Write-Host "Enabled Windows Sandbox optional feature" -ForegroundColor Green
 }
 
 Export-ModuleMember -Function *

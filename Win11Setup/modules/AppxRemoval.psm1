@@ -18,7 +18,13 @@ function Remove-AppxPackageByName {
         }
         else {
             Write-Host "Removing current-user Appx package: $($package.PackageFullName)"
-            Remove-AppxPackage -Package $package.PackageFullName -ErrorAction SilentlyContinue
+            try {
+                Remove-AppxPackage -Package $package.PackageFullName -ErrorAction Stop
+                Write-Host "Removed current-user Appx package: $($package.PackageFullName)" -ForegroundColor Green
+            }
+            catch {
+                Write-Host "WARNING: Failed to remove current-user Appx package $($package.PackageFullName): $($_.Exception.Message)" -ForegroundColor Yellow
+            }
         }
     }
 
@@ -32,7 +38,13 @@ function Remove-AppxPackageByName {
             }
             else {
                 Write-Host "Removing provisioned Appx package: $($package.PackageName)"
-                Remove-AppxProvisionedPackage -Online -PackageName $package.PackageName | Out-Null
+                try {
+                    Remove-AppxProvisionedPackage -Online -PackageName $package.PackageName -ErrorAction Stop | Out-Null
+                    Write-Host "Removed provisioned Appx package: $($package.PackageName)" -ForegroundColor Green
+                }
+                catch {
+                    Write-Host "WARNING: Failed to remove provisioned Appx package $($package.PackageName): $($_.Exception.Message)" -ForegroundColor Yellow
+                }
             }
         }
     }

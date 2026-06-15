@@ -19,6 +19,7 @@ The default posture is intentionally cautious. Nothing aggressive should happen 
 ```text
 Win11Setup/
   Bootstrap-Win11.ps1
+  Test-Win11Setup.ps1
   config/
     Profile.Minimal.psd1
     Profile.Dev.psd1
@@ -56,6 +57,12 @@ Review the output. Then run:
 ```
 
 This runs non-destructive/default-safe tasks.
+
+To validate the toolkit files without running setup tasks:
+
+```powershell
+.\Test-Win11Setup.ps1
+```
 
 To allow app removals and other destructive operations:
 

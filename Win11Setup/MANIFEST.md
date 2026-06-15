@@ -2,8 +2,9 @@
 
 SHA256 hashes for package contents.
 
-- `Bootstrap-Win11.ps1` — `ad394b97e3fe1fa3baa29a75aa38600755355801ef06eeee8e36f3739c2af16f`
-- `README.md` — `8d1e5a975d5df08e02ab1b9bf5b9e1ebd0d369129735532dbee4febf77dfc294`
+- `Bootstrap-Win11.ps1` — `5ccce8797bded2d362050a234f629521a1ed51fcab2582cd7900558f756ff713`
+- `README.md` — `a72ed926e5a2e49f6c8a6ddada1cc582b20f7f642534df00df23a4aa10678a4d`
+- `Test-Win11Setup.ps1` — `569bedf7bd2c36de4dc32f608249ed86a302e768fe49e73a1cb546f01e2c7784`
 - `config/Profile.Dev.psd1` — `a1eb6a61cc87b83cfe632835acaf696c74ff2c9fdb2f4026d6f3638b47ec92d6`
 - `config/Profile.Full.psd1` — `e7d323aa94c30c5298b5d606fcdb8a5df7186fa5eda90ddf79a7802f1389254a`
 - `config/Profile.Minimal.psd1` — `a941744c03c8a59a4417ab9cfed781e9a5b6b5fa3bd249eb11af50cb2908092e`
@@ -14,7 +15,7 @@ SHA256 hashes for package contents.
 - `lists/winget-minimal.json` — `11dc067d98dd9f830dae19afb81dea051ea9c1995d4da3a1e163aaac2239b662`
 - `logs/.gitkeep` — `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855`
 - `modules/AppInstall.psm1` — `3095feed9c8be242094b42ab27a5baa80300a48fbe5267f0fc21e0626355a8ee`
-- `modules/AppxRemoval.psm1` — `252b2596c8fd295fa67eff776379559c0c360b2f99ea3d3ed675ed1a1d0caf17`
+- `modules/AppxRemoval.psm1` — `763f6b3ad0be78282376171db5e5375cfbc2b543286eedfc1b4ab19d99d2bc14`
 - `modules/SystemHelpers.psm1` — `d62b326f8fcc3083bc52ad4843872651a12ab08fbc8a678594166b732ac577d5`
-- `modules/WindowsTweaks.psm1` — `30a0b4fa5841d7b37672559e767be83618b090fa2f389e79d350fdc0fa79e67f`
+- `modules/WindowsTweaks.psm1` — `98551460bf0ff670e379a6f1150d88fe5270529e68d3650b8c0fa04a43af11a5`
 - `modules/WingetHelpers.psm1` — `665559242d2542aa88dfd7ec2bf5294ccce4672486fdcf5f64822ce7b5355c73`
